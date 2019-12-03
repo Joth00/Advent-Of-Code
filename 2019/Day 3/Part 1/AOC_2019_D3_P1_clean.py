@@ -62,7 +62,8 @@ class Path:
             for j in range(1, len(other.path)):
                 line_segment = (self.path[i - 1], self.path[i])
                 other_line_segment = (other.path[j - 1], other.path[j])
-                intersection = Path.get_intersection_of_line_segements(line_segment, other_line_segment)
+                intersection = Path.get_intersection_of_line_segements(
+                    line_segment, other_line_segment)
                 if intersection is not None:
                     intersections.append(intersection)
         
@@ -71,11 +72,13 @@ class Path:
     
     @staticmethod
     def get_intersection_of_line_segements(line1, line2):
-        if (Path.is_line_segment_horizontal(line1) and Path.is_line_segment_vertical(line2)):
+        if (Path.is_line_segment_horizontal(line1)
+                and Path.is_line_segment_vertical(line2)):
             if Path.intersects(line1, line2):
                 intersection = Point(line2[0].x, line1[0].y)
                 return intersection
-        elif (Path.is_line_segment_vertical(line1) and Path.is_line_segment_horizontal(line2)):
+        elif (Path.is_line_segment_vertical(line1)
+                and Path.is_line_segment_horizontal(line2)):
             if Path.intersects(line2, line1):
                 intersection = Point(line1[0].x, line2[0].y)
                 return intersection
