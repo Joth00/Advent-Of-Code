@@ -73,9 +73,6 @@ def main():
     
     intersections = [x for x in intersections if x[0] != (0, 0)]
 
-    for i in intersections:
-        print(i, i[1] + i[2])
-
     best_intersection = min(intersections, key=lambda x: x[1] + x[2])
     least_steps = best_intersection[1] + best_intersection[2]
     
@@ -86,27 +83,29 @@ def main():
 def find_all_connections(commands):
     connections = []
     position = [0, 0]
-    steps = 0
-    for x in commands:
+    for i, x in enumerate(commands):
         command = x[0]
         value = int(x[1:])
         if command == 'R':
-            steps += value
-            connections.append(((*position,), (position[0] + value, position[1]), 0, steps))
+            connections.append(((*position,), (position[0] + value, position[1]), 0, calculate_steps(commands, i)))
             position[0] += value
         elif command == 'L':
-            steps += value
-            connections.append(((position[0] - value, position[1]), (*position,), 1, steps))
+            connections.append(((position[0] - value, position[1]), (*position,), 1, calculate_steps(commands, i)))
             position[0] -= value
         elif command == 'U':
-            steps += value
-            connections.append(((*position,), (position[0], position[1] + value), 0, steps))
+            connections.append(((*position,), (position[0], position[1] + value), 0, calculate_steps(commands, i)))
             position[1] += value
         elif command == 'D':
-            steps += value
-            connections.append(((position[0], position[1] - value), (*position,), 1, steps))
+            connections.append(((position[0], position[1] - value), (*position,), 1, calculate_steps(commands, i)))
             position[1] -= value
     return connections
+
+
+def calculate_steps(commands, n):
+    total_steps = 0
+    for i in range(n + 1):
+        total_steps += int(commands[i][1:])
+    return total_steps
 
 
 def get_raw_input():
