@@ -104,7 +104,7 @@ def get_raw_input():
 
 
 def get_input_file_path():
-    return path.join(path.dirname(__file__), 'test_input.txt')
+    return path.join(path.dirname(__file__), 'input.txt')
 
 
 main()

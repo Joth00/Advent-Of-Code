@@ -40,7 +40,7 @@ def main():
         intersections.remove((0, 0))
 
     closest_intersection = min(intersections, key=calculateManhattanDistanceFromOrigin)
-    lowest_distance = calculateManhattanDistanceFromOrigin(closest_intersection)
+    lowest_distance = get_manhattan_distance_from_origin(closest_intersection)
     
     print('closest_intersection:', closest_intersection)
     print('with lowest distance:', lowest_distance)
@@ -67,7 +67,7 @@ def find_all_connections(commands):
     return connections
 
 
-def calculateManhattanDistanceFromOrigin(point):
+def get_manhattan_distance_from_origin(point):
     return abs(point[1]) + abs(point[0])
 
 
