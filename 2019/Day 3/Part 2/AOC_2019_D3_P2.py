@@ -106,9 +106,6 @@ def find_all_connections(commands):
     return connections
 
 
-
-
-
 def get_raw_input():
     return open(retrieve_input_file_path(), 'r').read()
 
