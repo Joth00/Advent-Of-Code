@@ -11,19 +11,6 @@ def main():
     connections1 = find_all_connections(wire1)
     connections2 = find_all_connections(wire2)
 
-    """
-    if (0, 0) in connections1:
-        connections1.remove((0, 0))
-    if (0, 0) in connections2:
-        connections2.remove((0, 0))
-
-    for connection in connections1:
-        print(connection)
-    print('=============================')
-    for connection in connections2:
-        print(connection)
-    """
-
     intersections = []
 
     for connection1 in connections1:
