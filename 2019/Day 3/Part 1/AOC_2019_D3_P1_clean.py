@@ -27,9 +27,6 @@ class Point:
 
     def get_manhattan_distance_from_origin(self):
         return abs(self.x) + abs(self.y)
-    
-    def __repr__(self):
-        return f'({self.x}, {self.y})'
 
 
 class Path:
@@ -38,11 +35,9 @@ class Path:
         self.path = self.get_connection_points_from_raw_path(self.raw_path)
     
     def get_connection_points_from_raw_path(self, raw_path):
-        path = []
-        
+        path = [Point(0, 0)]        
         tracker_position = Point(0, 0)
-        path.append(tracker_position)
-        
+
         for instruction in raw_path:
             instruction_type = instruction[0]
             instruction_value = int(instruction[1:])
@@ -57,14 +52,11 @@ class Path:
                 tracker_position.y -= instruction_value
 
             path.append(Point(tracker_position.x, tracker_position.y))
-        
+
         return path
 
     def get_intersections_with(self, other):
         intersections = []
-
-        print(self.path)
-        print(other.path)
 
         for i in range(1, len(self.path)):
             for j in range(1, len(other.path)):
@@ -101,14 +93,8 @@ class Path:
     def intersects(horizontal_line, vertical_line):
         y_constant = horizontal_line[0].y
         x_constant = vertical_line[0].x
-        if horizontal_line[0].x > horizontal_line[1].x:
-            horizontal_line = horizontal_line[::-1]
-        if vertical_line[0].y > vertical_line[1].y:
-            vertical_line = vertical_line[::-1]
-        
-        if x_constant == 0 or y_constant == 207:
-            print(horizontal_line, vertical_line)
-
+        horizontal_line = sorted(horizontal_line, key=lambda p: p.x)
+        vertical_line = sorted(vertical_line, key=lambda p: p.y)
         return (vertical_line[0].y <= y_constant <= vertical_line[1].y
                 and horizontal_line[0].x <= x_constant <= horizontal_line[1].x)
 
