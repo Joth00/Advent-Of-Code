@@ -1,8 +1,6 @@
 # Advent Of Code 2019, Day 4, Part 1
 # Author: Joth (https://github.com/joth00)
 
-from os import path
-
 
 def main():
     value_range = (245182, 790572)
