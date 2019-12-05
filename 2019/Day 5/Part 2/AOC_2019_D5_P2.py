@@ -13,13 +13,14 @@ def main():
 
 class IntCode:
     INSTRUCTIONS = {
-        1: (3, lambda int_code, loc_val1, loc_val2, loc: int_code.store(int_code.get(loc_val1) + int_code.get(loc_val2), loc)),
-        2: (3, lambda int_code, loc_val1, loc_val2, loc: int_code.store(int_code.get(loc_val1) * int_code.get(loc_val2), loc)),
+        1: (3, lambda int_code, val1_loc, val2_loc, loc: int_code.store(int_code.get(val1_loc) + int_code.get(val2_loc), loc)),
+        2: (3, lambda int_code, val1_loc, val2_loc, loc: int_code.store(int_code.get(val1_loc) * int_code.get(val2_loc), loc)),
         3: (1, lambda int_code, loc: int_code.store(int(input('INPUT: ')), loc)),
         4: (1, lambda int_code, loc: print('OUTPUT:', int_code.get(loc))),
-        5: (2, lambda int_code, bool_loc, val_loc: int_code.execute_function_if(int_code.get(bool_loc) != 0, lambda: int_code.set_new_instruction_pointer(int_code.get(val_loc)))),
-        6: (2, lambda int_code, bool_loc, val_loc: int_code.execute_function_if(int_code.get(bool_loc) == 0, lambda: int_code.set_new_instruction_pointer(int_code.get(val_loc)))),
-        7: (),
+        5: (2, lambda int_code, bool_loc, val_loc: int_code.if_(int_code.get(bool_loc) != 0, lambda: int_code.set_new_instruction_pointer(int_code.get(val_loc)))),
+        6: (2, lambda int_code, bool_loc, val_loc: int_code.if_(int_code.get(bool_loc) == 0, lambda: int_code.set_new_instruction_pointer(int_code.get(val_loc)))),
+        7: (3, lambda int_code, val1_loc, val2_loc, loc: int_code.if_else(int_code.get(val1_loc) < int_code.get(val2_loc), lambda: int_code.store(1, loc), lambda: int_code.store(0, loc))),
+        8: (3, lambda int_code, val1_loc, val2_loc, loc: int_code.if_else(int_code.get(val1_loc) == int_code.get(val2_loc), lambda: int_code.store(1, loc), lambda: int_code.store(0, loc))),
         99: (0, lambda int_code: int_code.finish_execution())
     }
 
@@ -54,9 +55,15 @@ class IntCode:
     def finish_execution(self):
         self._finished_execution = True
     
-    def execute_function_if(self, condition, function):
+    def if_(self, condition, function):
         if condition:
             function()
+    
+    def if_else(self, condition, true_function, false_function):
+        if condition:
+            true_function()
+        else:
+            false_function()
 
     def execute(self):
         i = 0   # instruction pointer
@@ -84,6 +91,7 @@ class IntCode:
 
             if self._new_instruction_pointer[0]:
                 i = self._new_instruction_pointer[1]
+                self._new_instruction_pointer = (False, None)
             else:
                 i += number_of_parameters + 1
 
