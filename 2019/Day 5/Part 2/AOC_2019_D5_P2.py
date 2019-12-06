@@ -30,7 +30,7 @@ class IntCode:
     }
 
     def __init__(self, raw_int_code):
-        self._int_code = list(int(x) for x in raw_int_code.split(','))
+        self._int_code = [int(x) for x in raw_int_code.split(',')]
         self._new_instruction_pointer = (False, None)
         self._finished_execution = False
     
