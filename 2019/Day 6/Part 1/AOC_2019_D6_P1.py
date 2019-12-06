@@ -6,9 +6,7 @@ from os import path
 
 def main():
     text_input = get_raw_input()
-    raw_orbits = text_input.splitlines()
-    orbits = [x.split(')') for x in raw_orbits]
-    
+    orbits = [x.split(')') for x in text_input.splitlines()]
     space_objects = dict()
 
     # Add all different space objects
@@ -17,44 +15,42 @@ def main():
             if orbit[0] == 'COM':
                 space_objects['COM'] = Com()
             else:
-                space_objects[orbit[0]] = SpaceObject(orbit[0])
+                space_objects[orbit[0]] = SpaceObject()
         if orbit[1] not in space_objects.keys():
-            space_objects[orbit[1]] = SpaceObject(orbit[1])
+            space_objects[orbit[1]] = SpaceObject()
     
     # Set parent for every space object
     for orbit in orbits:
         space_objects[orbit[1]].set_parent(space_objects[orbit[0]])
 
-    total_indirect_orbits = 0
-    # Find number of indirect orbits for every space objects, add to sum
+    # Find number of direct and indirect orbits for every space objects, add to sum
+    total_orbits = 0
     for id_ in space_objects.keys():
         if isinstance(space_objects[id_], Com):
             continue
-        total_indirect_orbits += space_objects[id_].get_indirect_orbits_count()
+        total_orbits += space_objects[id_].get_parent_count()
     
-    print(total_indirect_orbits)
+    print('Total direct and indirect orbits:', total_orbits)
+
 
 class SpaceObject:
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self):
         self.parent = None
     
     def set_parent(self, parent):
         self.parent = parent
-
-    def get_indirect_orbits_count(self):
-        return self.parent.get_parent_orbits_count()
    
-    def get_parent_orbits_count(self):
-        return self.parent.get_parent_orbits_count() + 1
+    def get_parent_count(self):
+        return 1 + self.parent.get_parent_count()
 
 
 class Com(SpaceObject):
     def __init__(self):
-        super().__init__('COM')
+        super().__init__()
 
-    def get_parent_orbits_count(self):
-        return 1
+    def get_parent_count(self):
+        return 0
+
 
 def get_raw_input():
     return open(retrieve_input_file_path(), 'r').read()
