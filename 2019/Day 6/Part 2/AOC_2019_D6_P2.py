@@ -18,7 +18,7 @@ def main():
     
     # Set parent for every space object
     for orbit in orbits:
-        space_objects[orbit[1]].set_parent(space_objects[orbit[0]])
+        space_objects[orbit[1]].parent = space_objects[orbit[0]]
 
     parents_you = space_objects['YOU'].get_parents()
     parents_santa = space_objects['SAN'].get_parents()
@@ -34,9 +34,6 @@ def main():
 class SpaceObject:
     def __init__(self):
         self.parent = None
-    
-    def set_parent(self, parent):
-        self.parent = parent
    
     def get_parents(self):
         return [self.parent, *self.parent.get_parents()]

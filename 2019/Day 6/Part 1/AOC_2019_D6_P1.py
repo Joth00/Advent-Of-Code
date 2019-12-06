@@ -18,7 +18,7 @@ def main():
     
     # Set parent for every space object
     for orbit in orbits:
-        space_objects[orbit[1]].set_parent(space_objects[orbit[0]])
+        space_objects[orbit[1]].parent = space_objects[orbit[0]]
 
     # Find number of direct and indirect orbits for every space objects, add to sum
     total_orbits = 0
@@ -33,9 +33,6 @@ def main():
 class SpaceObject:
     def __init__(self):
         self.parent = None
-    
-    def set_parent(self, parent):
-        self.parent = parent
    
     def get_parent_count(self):
         return 1 + self.parent.get_parent_count()
