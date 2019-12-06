@@ -1,4 +1,4 @@
-# Advent Of Code 2019, Day 1, Part 2
+# Advent of Code 2019, Day 1, Part 2
 # Author: Joth (https://github.com/joth00)
 
 from math import floor

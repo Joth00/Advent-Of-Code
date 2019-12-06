@@ -1,4 +1,4 @@
-# Advent Of Code 2019, Day 4, Part 2
+# Advent of Code 2019, Day 4, Part 2
 # Author: Joth (https://github.com/joth00)
 
 

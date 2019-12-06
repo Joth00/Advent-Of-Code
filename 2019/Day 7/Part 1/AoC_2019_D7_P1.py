@@ -1,4 +1,4 @@
-# Advent Of Code 2019, Day 7, Part 1
+# Advent of Code 2019, Day 7, Part 1
 # Author: Joth (https://github.com/joth00)
 
 from os import path
