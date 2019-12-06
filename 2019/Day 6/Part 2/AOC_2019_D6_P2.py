@@ -12,10 +12,7 @@ def main():
     # Add all different space objects
     for orbit in orbits:
         if orbit[0] not in space_objects.keys():
-            if orbit[0] == 'COM':
-                space_objects['COM'] = Com()
-            else:
-                space_objects[orbit[0]] = SpaceObject()
+            space_objects[orbit[0]] = Com() if orbit[0] == 'COM' else SpaceObject()
         if orbit[1] not in space_objects.keys():
             space_objects[orbit[1]] = SpaceObject()
     
