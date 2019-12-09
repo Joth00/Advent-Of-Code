@@ -23,13 +23,7 @@ class IntCode:
         relative_base = 0    # relative base
         while i < len(self._int_code):
             opcode, parameter_modes = self._get_instruction(i)
-
-            if opcode not in IntCode.PARAMETER_COUNTS.keys():
-                i += 1
-                continue
-
             parameter_count = IntCode.PARAMETER_COUNTS[opcode]
-
             parameter_modes = parameter_modes + [0]*(parameter_count - len(parameter_modes))
             parameters = self._get_parameters(i + 1, parameter_count)
 
