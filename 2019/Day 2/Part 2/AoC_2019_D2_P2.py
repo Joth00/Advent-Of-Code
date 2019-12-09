@@ -32,14 +32,12 @@ def get_int_code_output(int_code_, noun, verb):
     while i < len(int_code):
         opcode = int_code[i]
         if opcode == 1:
-            int_code[int_code[i+3]] = int_code[int_code[i+1]] + int_code[int_code[i+2]]
+            int_code[int_code[i + 3]] = int_code[int_code[i + 1]] + int_code[int_code[i + 2]]
         elif opcode == 2:
-            int_code[int_code[i+3]] = int_code[int_code[i+1]] * int_code[int_code[i+2]]
+            int_code[int_code[i + 3]] = int_code[int_code[i + 1]]*int_code[int_code[i + 2]]
         elif opcode == 99:
             break
-        else:
-            # print('something went wrong')
-            return None
+
         i += 4
     
     return int_code[0]

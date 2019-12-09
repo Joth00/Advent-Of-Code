@@ -18,9 +18,12 @@ def main():
     for phase_setting_sequence in get_all_arrangements(phase_settings):
         output = 0
         for i in phase_setting_sequence:
-            amplifiers[i].execute_with_inputs([phase_setting_sequence[i], output])
-            output = amplifiers[i].outputs[0]
-            amplifiers[i].reset()
+            amplifier = amplifiers[i]
+            amplifier.add_input(phase_setting_sequence[i])
+            amplifier.add_input(output)
+            amplifier.execute()
+            output = amplifier.outputs[0]
+            amplifier.reset()
         outputs.append(output)
 
     print('Max thruster signal:', max(outputs))

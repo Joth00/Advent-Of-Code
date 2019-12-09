@@ -27,7 +27,6 @@ def main():
     final_image.visualize()
 
 
-
 class Image:
     BLACK = 0
     WHITE = 1
@@ -65,7 +64,6 @@ class Layer:
             for j in range(width):
                 data[i][j] = raw_data[i*width + j]
         return Layer(data)
-
 
     def add_to_image(self, img):
         for i in range(len(self._data)):

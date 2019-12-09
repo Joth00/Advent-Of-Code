@@ -3,9 +3,13 @@ from queue import Queue
 class Amplifier:
     PARAMETER_COUNTS = {1: 3, 2: 3, 3: 1, 4: 1, 5: 2, 6: 2, 7: 3, 8: 3, 99: 0}
 
+    class ParameterModes:
+        POSITION_MODE = 0
+        IMMEDIATE_MODE = 1
+
     def __init__(self, int_code, next_amplifier=None):
-        self._original_int_code = int_code
-        self._int_code = int_code
+        self._original_int_code = int_code[:]
+        self._int_code = int_code[:]
         self._input_buffer = Queue()
         self.next_amplifier = next_amplifier
         self.finished = False
@@ -22,20 +26,12 @@ class Amplifier:
     def amplify_till_halt(self):
         while self._i_ptr < len(self._int_code):
             opcode, parameter_modes = self._get_instruction(self._i_ptr)
-
-            if opcode not in Amplifier.PARAMETER_COUNTS.keys():
-                print('INVALID OPCODE')
-                self._i_ptr += 1
-                continue
-
             parameter_count = Amplifier.PARAMETER_COUNTS[opcode]
-
             parameter_modes = parameter_modes + [0]*(parameter_count - len(parameter_modes))
             parameters = self._get_parameters(self._i_ptr + 1, parameter_count)
 
             for j in range(len(parameters)):
-                if parameter_modes[j] == 1:
-                    # immediate mode, replace value by value index (location)
+                if parameter_modes[j] == Amplifier.ParameterModes.IMMEDIATE_MODE:
                     parameters[j] = self._i_ptr + j + 1
 
             if opcode == 1:
