@@ -1,4 +1,4 @@
-# Advent Of Code 2019, Day 6, Part 2
+# Advent of Code 2019, Day 6, Part 2
 # Author: Joth (https://github.com/joth00)
 
 from os import path
@@ -12,16 +12,13 @@ def main():
     # Add all different space objects
     for orbit in orbits:
         if orbit[0] not in space_objects.keys():
-            if orbit[0] == 'COM':
-                space_objects['COM'] = Com()
-            else:
-                space_objects[orbit[0]] = SpaceObject()
+            space_objects[orbit[0]] = Com() if orbit[0] == 'COM' else SpaceObject()
         if orbit[1] not in space_objects.keys():
             space_objects[orbit[1]] = SpaceObject()
     
     # Set parent for every space object
     for orbit in orbits:
-        space_objects[orbit[1]].set_parent(space_objects[orbit[0]])
+        space_objects[orbit[1]].parent = space_objects[orbit[0]]
 
     parents_you = space_objects['YOU'].get_parents()
     parents_santa = space_objects['SAN'].get_parents()
@@ -37,9 +34,6 @@ def main():
 class SpaceObject:
     def __init__(self):
         self.parent = None
-    
-    def set_parent(self, parent):
-        self.parent = parent
    
     def get_parents(self):
         return [self.parent, *self.parent.get_parents()]
