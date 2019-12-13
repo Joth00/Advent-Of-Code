@@ -1,6 +1,4 @@
 # Advent of Code 2019, Day 4, Part 1
-# Author: Joth (https://github.com/joth00)
-
 
 def main():
     value_range = (245182, 790572)
@@ -29,4 +27,5 @@ def digits_never_decrease(text_number):
     return True
 
 
-main()
+if __name__ == '__main__':
+    main()

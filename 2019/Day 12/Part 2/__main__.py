@@ -1,5 +1,4 @@
-# Advent of Code 2019, Day 10, Part 1
-# Author: Joth (https://github.com/joth00)
+# Advent of Code 2019, Day 12, Part 2
 
 from os import path
 import re
@@ -91,5 +90,5 @@ def retrieve_input_file_path():
     return path.join(path.dirname(__file__), 'input.txt')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

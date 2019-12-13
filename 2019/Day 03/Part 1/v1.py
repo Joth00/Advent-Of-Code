@@ -1,5 +1,4 @@
 # Advent of Code 2019, Day 3, Part 1
-# Author: Joth (https://github.com/joth00)
 
 from os import path
 
@@ -39,7 +38,7 @@ def main():
     if (0, 0) in intersections:
         intersections.remove((0, 0))
 
-    closest_intersection = min(intersections, key=calculateManhattanDistanceFromOrigin)
+    closest_intersection = min(intersections, key=get_manhattan_distance_from_origin)
     lowest_distance = get_manhattan_distance_from_origin(closest_intersection)
     
     print('closest_intersection:', closest_intersection)
@@ -79,4 +78,5 @@ def retrieve_input_file_path():
     return path.join(path.dirname(__file__), 'input.txt')
 
 
-main()
+if __name__ == '__main__':
+    main()

@@ -1,5 +1,4 @@
 # Advent of Code 2019, Day 3, Part 1
-# Author: Joth (https://github.com/joth00)
 
 from os import path
 
@@ -103,11 +102,12 @@ class Path:
 
 
 def get_raw_input():
-    return open(get_input_file_path(), 'r').read()
+    return open(retrieve_input_file_path(), 'r').read()
 
 
-def get_input_file_path():
+def retrieve_input_file_path():
     return path.join(path.dirname(__file__), 'input.txt')
 
 
-main()
+if __name__ == '__main__':
+    main()

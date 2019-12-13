@@ -1,5 +1,4 @@
-# Advent of Code 2019, Day 6, Part 1
-# Author: Joth (https://github.com/joth00)
+# Advent of Code 2019, Day 6, Part 2
 
 from os import path
 
@@ -20,30 +19,31 @@ def main():
     for orbit in orbits:
         space_objects[orbit[1]].parent = space_objects[orbit[0]]
 
-    # Find number of direct and indirect orbits for every space objects, add to sum
-    total_orbits = 0
-    for id_ in space_objects.keys():
-        if isinstance(space_objects[id_], Com):
-            continue
-        total_orbits += space_objects[id_].get_parent_count()
-    
-    print('Total direct and indirect orbits:', total_orbits)
+    parents_you = space_objects['YOU'].get_parents()
+    parents_santa = space_objects['SAN'].get_parents()
+
+    for parent_you in parents_you:
+        for parent_santa in parents_santa:
+            if parent_you == parent_santa:
+                orbital_transfer_count = parents_you.index(parent_you) + parents_santa.index(parent_santa)
+                print('Minimal number of orbital transfers required:', orbital_transfer_count)
+                return
 
 
 class SpaceObject:
     def __init__(self):
         self.parent = None
    
-    def get_parent_count(self):
-        return 1 + self.parent.get_parent_count()
+    def get_parents(self):
+        return [self.parent, *self.parent.get_parents()]
 
 
 class Com(SpaceObject):
     def __init__(self):
         super().__init__()
 
-    def get_parent_count(self):
-        return 0
+    def get_parents(self):
+        return [self]
 
 
 def get_raw_input():
@@ -54,4 +54,5 @@ def retrieve_input_file_path():
     return path.join(path.dirname(__file__), 'input.txt')
 
 
-main()
+if __name__ == '__main__':
+    main()

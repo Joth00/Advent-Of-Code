@@ -1,5 +1,4 @@
-# Advent of Code 2019, Day 5, Part 1
-# Author: Joth (https://github.com/joth00)
+# Advent of Code 2019, Day 5, Part 2
 
 from os import path
 from queue import Queue
@@ -9,7 +8,7 @@ def main():
     text_input = get_raw_input()
     int_code = IntCode(text_input)
 
-    int_code.add_input(1)
+    int_code.add_input(5)
     int_code.execute()
 
 
@@ -19,18 +18,18 @@ class NotEnoughInputsError(Exception):
 
 
 class IntCode:
-    PARAMETER_COUNTS = {1: 3, 2: 3, 3: 1, 4: 1, 99: 0}
+    PARAMETER_COUNTS = {1: 3, 2: 3, 3: 1, 4: 1, 5: 2, 6: 2, 7: 3, 8: 3, 99: 0}
 
     class ParameterModes:
         POSITION_MODE = 0
         IMMEDIATE_MODE = 1
-
+    
     def __init__(self, raw_int_code):
-        self._int_code = list(int(x) for x in raw_int_code.split(','))
+        self._int_code = [int(x) for x in raw_int_code.split(',')]
         self._input_buffer = Queue()
 
     def execute(self):
-        i = 0   # Instruction pointer
+        i = 0   # instruction pointer
         while i < len(self._int_code):
             opcode, parameter_modes = self._get_instruction(i)
             parameter_count = IntCode.PARAMETER_COUNTS[opcode]
@@ -52,9 +51,27 @@ class IntCode:
                     raise NotEnoughInputsError
             elif opcode == 4:
                 print('OUTPUT:', self._int_code[parameters[0]])
+            elif opcode == 5:
+                if self._int_code[parameters[0]] != 0:
+                    i = self._int_code[parameters[1]]
+                    continue
+            elif opcode == 6:
+                if self._int_code[parameters[0]] == 0:
+                    i = self._int_code[parameters[1]]
+                    continue
+            elif opcode == 7:
+                if self._int_code[parameters[0]] < self._int_code[parameters[1]]:
+                    self._int_code[parameters[2]] = 1
+                else:
+                    self._int_code[parameters[2]] = 0
+            elif opcode == 8:
+                if self._int_code[parameters[0]] == self._int_code[parameters[1]]:
+                    self._int_code[parameters[2]] = 1
+                else:
+                    self._int_code[parameters[2]] = 0
             elif opcode == 99:
                 break
- 
+
             i += parameter_count + 1
     
     def _get_instruction(self, opcode_location):
@@ -63,8 +80,8 @@ class IntCode:
         parameter_modes = [int(x) for x in str(full_opcode)[:-2][::-1]]
         return (opcode, parameter_modes)
     
-    def _get_parameters(self, location, parameter_count):
-        return self._int_code[location:location + parameter_count]
+    def _get_parameters(self, location, number_of_parameters):
+        return self._int_code[location : location + number_of_parameters]
     
     def _is_input_available(self):
         return not self._input_buffer.empty()
@@ -84,4 +101,5 @@ def retrieve_input_file_path():
     return path.join(path.dirname(__file__), 'input.txt')
 
 
-main()
+if __name__ == '__main__':
+    main()

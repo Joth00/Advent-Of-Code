@@ -1,5 +1,4 @@
 # Advent of Code 2019, Day 11, Part 1
-# Author: Joth
 
 from os import path
 from intcode import IntCode

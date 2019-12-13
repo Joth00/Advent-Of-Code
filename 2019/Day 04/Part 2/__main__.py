@@ -30,4 +30,5 @@ def digits_never_decrease(text_number):
     return True
 
 
-main()
+if __name__ == '__main__':
+    main()
